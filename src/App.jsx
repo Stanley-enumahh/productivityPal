@@ -5,6 +5,8 @@ import { AccountUI } from "./components/accountUI";
 import imageCompression from "browser-image-compression";
 import { NotesUI } from "./components/notesUI";
 import { useForm } from "react-hook-form";
+import { OverviewUI } from "./components/overvieUI";
+import { Todos } from "./components/todos";
 
 export default function App() {
   // const [Tabs, setTabs] = useState(initialTabs);
@@ -87,8 +89,22 @@ export default function App() {
 
       {/* contents */}
 
-      <div className="w-full h-full items-center flex flex-col gap-4 py-5">
-        <div className="h-[60px] w-[94%] bg-white rounded-lg mx-7"></div>
+      <div className="w-full h-full items-center flex flex-col gap-4">
+        <div className="h-[60px] border-gray-300 border-b w-full px-8 mx-7 flex flex-row justify-between items-center">
+          <input
+            type="text"
+            className="rounded-md w-[45%] border border-slate-400 h-fit bg-gray-200 py-1 px-3"
+            placeholder="search"
+          />
+          <span className="flex bg-gray-200 px-4 py-1 rounded-lg flex-row gap-2 text-sm items-center">
+            <img
+              src={profileImg}
+              alt=""
+              className="w-[30px] shadow-lg h-[30px] rounded-full"
+            />
+            <p className="font-semibold capitalize">{profile.username}</p>
+          </span>
+        </div>
 
         <div className="h-[85%] flex flex-col gap-4 w-[90%]">
           {activeTab === "Profile" ? (
@@ -102,8 +118,12 @@ export default function App() {
               setProfileImg={setProfileImg}
               onChangeProfileImg={handleChangeProfileImg}
             />
+          ) : activeTab === "Notes" ? (
+            <NotesUI />
+          ) : activeTab === "overview" ? (
+            <OverviewUI profile={profile} />
           ) : (
-            activeTab === "Notes" && <NotesUI />
+            activeTab === "Todos" && <Todos />
           )}
         </div>
       </div>

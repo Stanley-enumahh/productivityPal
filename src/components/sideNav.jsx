@@ -48,7 +48,7 @@ export function SideNav({ onActiveTab, activeTab }) {
         <span>
           <LuListTodo />
         </span>
-        <p>Todos</p>
+        <p>Todo List</p>
       </li>
       <li
         onClick={() => onActiveTab("Profile")}

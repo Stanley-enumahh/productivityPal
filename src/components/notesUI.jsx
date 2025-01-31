@@ -107,33 +107,13 @@ export function NotesUI() {
       <div className="flex flex-row w-full h-full justify-between">
         <div className="w-[74%] overflow-y-scroll flex-wrap flex flex-row gap-4 p-5 bg-white rounded shadow-lg h-[450px]">
           {noteArray.length >= 1 ? (
-            noteArray.map((note, i) => (
-              <div
-                key={i}
-                className={`${note.noteBgcolor} shadow-lg w-[220px] flex flex-col h-[180px] gap-3 justify-between p-3 rounded-lg `}
-              >
-                <div className="flex flex-col gap-3 w-full h-fit">
-                  <span className="w-full gap-2 text-sm items-center flex justify-end">
-                    <FaPencil
-                      onClick={() => handeleEditNote(note)}
-                      className="cursor-pointer"
-                    />
-                    <MdDeleteOutline
-                      onClick={() => handleDeleteNote(note.id)}
-                      className="text-red-500 cursor-pointer"
-                    />
-                  </span>
-
-                  <div className="flex w-full text-xs flex-col gap-2">
-                    <p className="font-bold">{note.noteTitle}</p>
-                    <p className=" break-words text-wrap">{note.noteContent}</p>
-                  </div>
-                </div>
-                <span className="text-xs w-full justify-between flex flex-row  text-gray-700">
-                  <p>{note.time}</p>
-                  <p>{note.date}</p>
-                </span>
-              </div>
+            noteArray.map((note) => (
+              <NoteObj
+                key={note.id}
+                note={note}
+                handeleEditNote={handeleEditNote}
+                handleDeleteNote={handleDeleteNote}
+              />
             ))
           ) : (
             <div className="w-full h-full flex justify-center items-center">
@@ -152,7 +132,7 @@ export function NotesUI() {
           ) : (
             <button
               onClick={handleNoteFormOpen}
-              className="bg-black text-xs text-white rounded shadow-lg cursor-pointer px-4 py-2"
+              className="bg-blue-600 text-xs text-white rounded shadow-lg cursor-pointer px-4 py-2"
             >
               {noteFormOpen ? "forfeit note" : "+ new note"}
             </button>
@@ -175,6 +155,36 @@ export function NotesUI() {
   );
 }
 
+function NoteObj({ note, handleDeleteNote, handeleEditNote }) {
+  return (
+    <div
+      key={note.id}
+      className={`${note.noteBgcolor} cursor-pointer shadow-lg w-[220px] flex flex-col h-[180px] gap-3 justify-between p-3 rounded-lg `}
+    >
+      <div className="flex flex-col gap-3 w-full h-fit">
+        <span className="w-full gap-2 text-sm items-center flex justify-end">
+          <FaPencil
+            onClick={() => handeleEditNote(note)}
+            className="cursor-pointer"
+          />
+          <MdDeleteOutline
+            onClick={() => handleDeleteNote(note.id)}
+            className="text-red-500 cursor-pointer"
+          />
+        </span>
+
+        <div className="flex w-full text-xs flex-col gap-2">
+          <p className="font-bold">{note.noteTitle}</p>
+          <p className=" break-words text-wrap">{note.noteContent}</p>
+        </div>
+      </div>
+      <span className="text-xs w-full justify-between flex flex-row  text-gray-700">
+        <p>{note.time}</p>
+        <p>{note.date}</p>
+      </span>
+    </div>
+  );
+}
 function NoteForm({
   setNoteTitle,
   noteTitle,
@@ -194,7 +204,7 @@ function NoteForm({
           id="title"
           type="text"
           placeholder="title"
-          className="border outline-none border-gray-400 w-[220px] rounded text-xs py-2 px-2"
+          className="border outline-none border-gray-400 w-[200px] rounded text-xs py-2 px-2"
         />
         {/* {errors.username && (
                   <p className="text-xs text-red-500">username is required</p>
@@ -208,7 +218,7 @@ function NoteForm({
         name=""
         id="note"
         placeholder="note"
-        className="border outline-none border-gray-400 w-[220px] rounded text-xs py-2 px-2 text-wrap h-[100px]"
+        className="border outline-none border-gray-400 w-[200px] rounded text-xs py-2 px-2 text-wrap h-[100px]"
       ></textarea>
 
       {!selectedNote ? (
